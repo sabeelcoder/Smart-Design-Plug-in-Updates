@@ -115,7 +115,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
             return NewItems;
         }
 
-        public List<WpfApp1.Models.Item> ExData(Document doc)
+        public (List<WpfApp1.Models.Item>,string,string,string) ExData(Document doc)
         {
             List<WpfApp1.Models.Item> ExData = new List<WpfApp1.Models.Item>();
 
@@ -139,6 +139,19 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
 
             #region Get data
+            var Header= tsd.GetCellText(tsd.FirstRowNumber, tsd.FirstColumnNumber);
+            String[] spearator = { "___" };
+            Int32 count = 8;
+            var x = Header.Split(spearator, count, StringSplitOptions.RemoveEmptyEntries);
+            var RecordID = "";
+            var ProjectNum = "";
+            var ProjectName = "";
+            if (x.Length > 1)
+            {
+                RecordID = x[1];
+                ProjectNum = x[2];
+                ProjectName = x[3];
+            }
             int NumberOfRows = tsd.NumberOfRows - 3;
             List<WpfApp1.Models.Item> NewItems = new List<WpfApp1.Models.Item>();
             for (int i = 0; i < NumberOfRows; i++)
@@ -205,7 +218,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
 
 
-            return NewItems;
+            return (NewItems, RecordID,ProjectNum,ProjectName);
         }
     }
 }

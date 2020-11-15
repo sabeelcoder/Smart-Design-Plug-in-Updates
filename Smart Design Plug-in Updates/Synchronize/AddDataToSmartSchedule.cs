@@ -14,7 +14,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
     class AddDataToSmartSchedule
     {
-        public void AddData(List<WpfApp1.Models.Item> Records, Document doc)
+        public void AddData(List<WpfApp1.Models.Item> Records, Document doc,string RecordIDD,string ProjectNumber,string ProjectNamee)
         {
 
             ViewSchedule smartSchedule;
@@ -32,6 +32,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                                  where v.Name == scheduleTitle
                                  select v).FirstOrDefault();
                 #endregion               
+
 
 
                 #region Gathering Headers to be used for the table data
@@ -54,6 +55,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                 #region Setting the table and location where the data will go
                 var tableData = smartSchedule.GetTableData();
                 var tsd = tableData.GetSectionData(SectionType.Header);
+                tsd.SetCellText(tsd.FirstRowNumber, tsd.FirstColumnNumber, "Smart Schedule" + "___"+RecordIDD+"___"+ProjectNumber+"___"+ProjectNamee);
                 #endregion
 
 

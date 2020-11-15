@@ -13,7 +13,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 {
     class IdentifyingChosenMethod
     {
-        public void IdnetifyMethod(Autodesk.Revit.DB.Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist)
+        public void IdnetifyMethod(Autodesk.Revit.DB.Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist, string RecordID, string ProjectNum, string ProjectName)
         {
             List<ClustersData> ScheduleItems = new List<ClustersData>();
             if (Method == "Extract")
@@ -28,7 +28,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                     if (UserResp.ToString() == "Yes")
                     {
                         #region Intialize window
-                        CreateUpdate x = new CreateUpdate(NewScheduleData);
+                        CreateUpdate x = new CreateUpdate(NewScheduleData,RecordID);
                         double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                         double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                         double windowWidth = x.Width;
@@ -69,7 +69,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
                         #region Adding items to the schedule
                         AddDataToSmartSchedule Adding1 = new AddDataToSmartSchedule();
-                        Adding1.AddData(RecordsSortedTwo, doc);
+                        Adding1.AddData(RecordsSortedTwo, doc,RecordID,ProjectNum,ProjectName);
                         #endregion
 
 
@@ -85,7 +85,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
                         #region Adding items to the schedule
                         AddDataToSmartSchedule Adding = new AddDataToSmartSchedule();
-                        Adding.AddData(RecordsSorted, doc);
+                        Adding.AddData(RecordsSorted, doc, RecordID, ProjectNum, ProjectName);
                         #endregion
 
 
@@ -125,7 +125,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
                     #region Adding items to the schedule
                     AddDataToSmartSchedule Adding = new AddDataToSmartSchedule();
-                    Adding.AddData(RecordsSorted, doc);
+                    Adding.AddData(RecordsSorted, doc, RecordID, ProjectNum, ProjectName);
                     #endregion
 
 
@@ -157,7 +157,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                 #region Send items to be created
 
                 #region Intialize window
-                CreateUpdate x = new CreateUpdate(NewRecords);
+                CreateUpdate x = new CreateUpdate(NewRecords,RecordID);
                 double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                 double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                 double windowWidth = x.Width;
@@ -222,7 +222,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                         #region Adding items to the schedule
                         NewRecordsTwo.Reverse();
                         AddDataToSmartSchedule Adding = new AddDataToSmartSchedule();
-                        Adding.AddData(NewRecordsTwo, doc);
+                        Adding.AddData(NewRecordsTwo, doc, RecordID, ProjectNum, ProjectName);
                         #endregion
                         #endregion
                         MessageBoxButton buttons = MessageBoxButton.OK;

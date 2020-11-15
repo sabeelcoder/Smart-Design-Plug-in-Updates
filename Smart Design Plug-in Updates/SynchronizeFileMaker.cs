@@ -38,37 +38,7 @@ namespace Smart_Design_Plug_in_Updates
                                                  select v).FirstOrDefault();
             #endregion
 
-            #region LoadingProjects
-            LoadingProjects xxx = new LoadingProjects();
-            double screenWidthload = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double screenHeightload = System.Windows.SystemParameters.PrimaryScreenHeight;
-            xxx.Width = 300;
-            xxx.Height = 100;
-            double windowWidthload= xxx.Width;
-            double windowHeightload = xxx.Height;
-            xxx.Left = (screenWidthload / 2) - (windowWidthload / 2);
-            xxx.Top = (screenHeightload / 2) - (windowHeightload / 2);
-            xxx.ShowDialog();
-            List<Project> Projects = new List<Project>();
-            foreach (var x in xxx.AllProjects)
-            {
-                Projects.Add(x);
-            }
-                
-            #endregion
 
-            #region Intialize ProjectsList
-            ChooseProject xx = new ChooseProject(Projects);
-            double screenWidthChoose = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double screenHeightChoose = System.Windows.SystemParameters.PrimaryScreenHeight;
-            xx.Width = 800;
-            xx.Height = 505;
-            double windowWidthChoose = xx.Width;
-            double windowHeightChoose = xx.Height;
-            xx.Left = (screenWidthChoose / 2) - (windowWidthChoose / 2);
-            xx.Top = (screenHeightChoose / 2) - (windowHeightChoose / 2);
-            xx.ShowDialog();
-            #endregion
 
 
 
@@ -81,6 +51,38 @@ namespace Smart_Design_Plug_in_Updates
                 var UserResp = MessageBox.Show("No smart schedule has been created do you want to make an empty schedule?", "Warning", buttons, MessageBoxImage.Warning);
                 if (UserResp.ToString() == "OK")
                 {
+                    #region LoadingProjects
+                    LoadingProjects xxx = new LoadingProjects();
+                    double screenWidthload = System.Windows.SystemParameters.PrimaryScreenWidth;
+                    double screenHeightload = System.Windows.SystemParameters.PrimaryScreenHeight;
+                    xxx.Width = 300;
+                    xxx.Height = 100;
+                    double windowWidthload = xxx.Width;
+                    double windowHeightload = xxx.Height;
+                    xxx.Left = (screenWidthload / 2) - (windowWidthload / 2);
+                    xxx.Top = (screenHeightload / 2) - (windowHeightload / 2);
+                    xxx.ShowDialog();
+                    List<Project> Projects = new List<Project>();
+                    foreach (var Project in xxx.AllProjects)
+                    {
+                        Projects.Add(Project);
+                    }
+
+                    #endregion
+
+                    #region Intialize ProjectsList
+                    ChooseProject xx = new ChooseProject(Projects);
+                    double screenWidthChoose = System.Windows.SystemParameters.PrimaryScreenWidth;
+                    double screenHeightChoose = System.Windows.SystemParameters.PrimaryScreenHeight;
+                    xx.Width = 800;
+                    xx.Height = 505;
+                    double windowWidthChoose = xx.Width;
+                    double windowHeightChoose = xx.Height;
+                    xx.Left = (screenWidthChoose / 2) - (windowWidthChoose / 2);
+                    xx.Top = (screenHeightChoose / 2) - (windowHeightChoose / 2);
+                    xx.ShowDialog();
+                    #endregion
+
                     #region Send to create schedule class
                     CreateSmartSchedule create = new CreateSmartSchedule();
                     string Exist = create.CreateSchedule(doc, ScheduleItems);
@@ -88,12 +90,15 @@ namespace Smart_Design_Plug_in_Updates
 
                     #region Extract data
                     ExtractDataFromSchedule ExData = new ExtractDataFromSchedule();
-                    List<WpfApp1.Models.Item> ScheduleData = ExData.ExData(doc);
-                    
+                    var data = ExData.ExData(doc);
+                    List<WpfApp1.Models.Item> ScheduleData = data.Item1;
+                    var RecordID = xx.ChoosedProject.RecordID;
+                    var ProjectNum = xx.ChoosedProject.Project_Number;
+                    var ProjectName = xx.ChoosedProject.Project_Name;
                     #endregion
 
                     #region Intialize window
-                    MainWindow x = new MainWindow(ScheduleData);
+                    MainWindow x = new MainWindow(ScheduleData,RecordID);
                     double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                     double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                     double windowWidth = x.Width;
@@ -111,7 +116,7 @@ namespace Smart_Design_Plug_in_Updates
                     var RecordsSorted = Sorting.RecordsSort(RecordsUnsorted);
                     #endregion
                     List<WpfApp1.Models.Item> NewScheduleData = ExData.NewRecords(RecordsSorted,doc);
-                    Identify(doc, Method, RecordsUnsorted,NewScheduleData,ScheduleExist);
+                    Identify(doc, Method, RecordsUnsorted,NewScheduleData,ScheduleExist,RecordID,ProjectNum,ProjectName);
                     #endregion
 
 
@@ -140,11 +145,59 @@ namespace Smart_Design_Plug_in_Updates
                 {
                     #region Extract data
                     ExtractDataFromSchedule ExData = new ExtractDataFromSchedule();
-                    List<WpfApp1.Models.Item> ScheduleData = ExData.ExData(doc);
+                    var data = ExData.ExData(doc);
+                    string RecordID = "";
+                    string ProjectNum = "";
+                    string ProjectName = "";
+                    List<WpfApp1.Models.Item> ScheduleData = data.Item1;
+                    RecordID = data.Item2;
+                    ProjectNum = data.Item3;
+                    ProjectName = data.Item4;
                     #endregion
 
+                    #region Check if the user should choose a project or not
+                    if (RecordID == "")
+                    {
+                        #region LoadingProjects
+                        LoadingProjects xxx = new LoadingProjects();
+                        double screenWidthload = System.Windows.SystemParameters.PrimaryScreenWidth;
+                        double screenHeightload = System.Windows.SystemParameters.PrimaryScreenHeight;
+                        xxx.Width = 300;
+                        xxx.Height = 100;
+                        double windowWidthload = xxx.Width;
+                        double windowHeightload = xxx.Height;
+                        xxx.Left = (screenWidthload / 2) - (windowWidthload / 2);
+                        xxx.Top = (screenHeightload / 2) - (windowHeightload / 2);
+                        xxx.ShowDialog();
+                        List<Project> Projects = new List<Project>();
+                        foreach (var Project in xxx.AllProjects)
+                        {
+                            Projects.Add(Project);
+                        }
+
+                        #endregion
+
+                        #region Intialize ProjectsList
+                        ChooseProject xx = new ChooseProject(Projects);
+                        double screenWidthChoose = System.Windows.SystemParameters.PrimaryScreenWidth;
+                        double screenHeightChoose = System.Windows.SystemParameters.PrimaryScreenHeight;
+                        xx.Width = 800;
+                        xx.Height = 505;
+                        double windowWidthChoose = xx.Width;
+                        double windowHeightChoose = xx.Height;
+                        xx.Left = (screenWidthChoose / 2) - (windowWidthChoose / 2);
+                        xx.Top = (screenHeightChoose / 2) - (windowHeightChoose / 2);
+                        xx.ShowDialog();
+                        RecordID = xx.ChoosedProject.RecordID;
+                        ProjectNum = xx.ChoosedProject.Project_Number;
+                        ProjectName = xx.ChoosedProject.Project_Name;
+                        #endregion
+                    }
+                    #endregion
+
+
                     #region Intialize window
-                    MainWindow x = new MainWindow(ScheduleData);
+                    MainWindow x = new MainWindow(ScheduleData,RecordID);
                     double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                     double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                     double windowWidth = x.Width;
@@ -162,23 +215,17 @@ namespace Smart_Design_Plug_in_Updates
                     var RecordsSorted = Sorting.RecordsSort(RecordsUnsorted);
                     #endregion
                     List<WpfApp1.Models.Item> NewScheduleData = ExData.NewRecords(RecordsSorted, doc);
-                    Identify(doc, Method, RecordsUnsorted,NewScheduleData,ScheduleExist);
-
+                    Identify(doc, Method, RecordsUnsorted,NewScheduleData,ScheduleExist,RecordID,ProjectNum,ProjectName);
                     #endregion
                 }
-
-
             }
-
-
-
             return Result.Succeeded;
         }
 
-        public void Identify(Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist)
+        public void Identify(Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist,string RecordID,string ProjectNum,string ProjectName)
         {
             IdentifyingChosenMethod Identifying = new IdentifyingChosenMethod();
-            Identifying.IdnetifyMethod(doc, Method, RecordsUnsorted, NewScheduleData,Exist);
+            Identifying.IdnetifyMethod(doc, Method, RecordsUnsorted, NewScheduleData,Exist,RecordID,ProjectNum,ProjectName);
         }
 
     }
