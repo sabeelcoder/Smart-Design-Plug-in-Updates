@@ -37,6 +37,41 @@ namespace Smart_Design_Plug_in_Updates
                                                  where v.Name == scheduleTitle
                                                  select v).FirstOrDefault();
             #endregion
+
+            #region LoadingProjects
+            LoadingProjects xxx = new LoadingProjects();
+            double screenWidthload = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeightload = System.Windows.SystemParameters.PrimaryScreenHeight;
+            xxx.Width = 300;
+            xxx.Height = 100;
+            double windowWidthload= xxx.Width;
+            double windowHeightload = xxx.Height;
+            xxx.Left = (screenWidthload / 2) - (windowWidthload / 2);
+            xxx.Top = (screenHeightload / 2) - (windowHeightload / 2);
+            xxx.ShowDialog();
+            List<Project> Projects = new List<Project>();
+            foreach (var x in xxx.AllProjects)
+            {
+                Projects.Add(x);
+            }
+                
+            #endregion
+
+            #region Intialize ProjectsList
+            ChooseProject xx = new ChooseProject(Projects);
+            double screenWidthChoose = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeightChoose = System.Windows.SystemParameters.PrimaryScreenHeight;
+            xx.Width = 800;
+            xx.Height = 505;
+            double windowWidthChoose = xx.Width;
+            double windowHeightChoose = xx.Height;
+            xx.Left = (screenWidthChoose / 2) - (windowWidthChoose / 2);
+            xx.Top = (screenHeightChoose / 2) - (windowHeightChoose / 2);
+            xx.ShowDialog();
+            #endregion
+
+
+
             string ScheduleExist = " ";
             if (CheckIfScheduleExist == null)
             {
