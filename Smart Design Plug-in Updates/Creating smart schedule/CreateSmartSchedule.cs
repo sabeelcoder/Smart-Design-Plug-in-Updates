@@ -92,6 +92,17 @@ namespace Smart_Design_Plug_in_Updates
                     headerList.Add("Model");
                     headerList.Add("Description");
                     headerList.Add("Website");
+                    headerList.Add("Image 1");
+                    headerList.Add("Image 2");
+                    headerList.Add("Image 3");
+                    headerList.Add("Image 4");
+                    headerList.Add("Image 5");
+                    headerList.Add("Image 6");
+                    headerList.Add("Image 7");
+                    headerList.Add("Image 8");
+                    headerList.Add("Image 9");
+
+
                     #endregion
 
                     #region Setting the table and location where the data will go
@@ -144,6 +155,15 @@ namespace Smart_Design_Plug_in_Updates
                         tsd.SetColumnWidth(9, (stringLen / 25 + 1));
                         tsd.SetColumnWidth(10, (stringLen / 25 + 1));
                         tsd.SetColumnWidth(11, (stringLen / 25 + 1));
+                        tsd.SetColumnWidth(12, (stringLen / 25 + 1));
+                        tsd.SetColumnWidth(13, (stringLen / 25 + 1));
+                        tsd.SetColumnWidth(14, (stringLen / 25 + 1));
+                        tsd.SetColumnWidth(15, (stringLen / 25 + 1));
+                        tsd.SetColumnWidth(16, (stringLen / 25 + 1));
+                        tsd.SetColumnWidth(17, (stringLen / 25 + 1));
+                        tsd.SetColumnWidth(18, (stringLen / 25 + 1));
+                        tsd.SetColumnWidth(19, (stringLen / 25 + 1));
+                        tsd.SetColumnWidth(20, (stringLen / 25 + 1));
                         tsd.InsertRow(tsd.FirstRowNumber + 2 + x);
 
                         string RecordID = Da.RecordID;

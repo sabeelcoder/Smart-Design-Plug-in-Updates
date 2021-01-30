@@ -247,13 +247,7 @@ namespace Smart_Design_Plug_in_Updates
                     #endregion
 
 
-                    // Modify document within a transaction
 
-                    using (Transaction tx = new Transaction(doc))
-                    {
-                        tx.Start("Transaction Name");
-                        tx.Commit();
-                    }
 
                 }
 
