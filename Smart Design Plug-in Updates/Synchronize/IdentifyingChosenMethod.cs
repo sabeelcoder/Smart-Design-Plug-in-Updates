@@ -2,12 +2,16 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfApp1;
+using System.Windows.Media.Imaging;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Smart_Design_Plug_in_Updates.Synchronize
 {
@@ -16,6 +20,22 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
         public void IdnetifyMethod(Autodesk.Revit.DB.Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist, string RecordID, string ProjectNum, string ProjectName)
         {
             List<ClustersData> ScheduleItems = new List<ClustersData>();
+            string path = @"%AppData%\Autodesk\REVIT\Addins\2019\Smart App";
+            path = Environment.ExpandEnvironmentVariables(path);
+            System.IO.DirectoryInfo di = new DirectoryInfo(path);
+             if (!Directory.Exists(path))
+             {
+                 System.IO.Directory.CreateDirectory(path);
+             }
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+
             if (Method == "Extract")
             {
 
@@ -50,6 +70,10 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                             tx.Start("Updating smart schedule");
 
                             doc.Delete(smartSchedule.Id);
+
+                            //yy
+                           // var test = GetImageSource((RecordsUnsorted[94]).Images[0]);
+                           // ImageType.Create(test.)
                             tx.Commit();
                         }
 
@@ -107,8 +131,11 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                         using (Transaction tx = new Transaction(doc))
                         {
                             tx.Start("Updating smart schedule");
+                            if (!(smartSchedule == null))
+                            {
+                                doc.Delete(smartSchedule.Id);
+                            }
 
-                            doc.Delete(smartSchedule.Id);
                             tx.Commit();
                         }
 
@@ -241,6 +268,22 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
             {
 
             }
+        }
+        private BitmapSource GetImageSource(Image img)
+        {
+            BitmapImage bmp = new BitmapImage();
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, ImageFormat.Png);
+                ms.Position = 0;
+                bmp.BeginInit();
+                bmp.CacheOption = BitmapCacheOption.OnLoad;
+                bmp.UriSource = null;
+                bmp.StreamSource = ms;
+                bmp.EndInit();
+            }
+            return bmp;
         }
     }
 }

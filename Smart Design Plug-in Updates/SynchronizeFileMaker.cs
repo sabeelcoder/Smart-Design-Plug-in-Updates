@@ -2,15 +2,20 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Smart_Design_Plug_in_Updates.Synchronize;
+using SmartImageForm_v1;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using WpfApp1;
 using WpfApp1.Models;
+//using SmartImageForm_v1;
 
 namespace Smart_Design_Plug_in_Updates
 {
@@ -100,7 +105,7 @@ namespace Smart_Design_Plug_in_Updates
                         #endregion
 
                         #region Intialize window
-                        MainWindow x = new MainWindow(ScheduleData, RecordID);
+                        MainWindow x = new MainWindow(ScheduleData, RecordID,ProjectNum);
                         double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                         double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                         double windowWidth = x.Width;
@@ -116,6 +121,9 @@ namespace Smart_Design_Plug_in_Updates
                         #region Sort items
                         Sortrecords Sorting = new Sortrecords();
                         var RecordsSorted = Sorting.RecordsSort(RecordsUnsorted);
+
+
+
                         #endregion
                         List<WpfApp1.Models.Item> NewScheduleData = ExData.NewRecords(RecordsSorted, doc);
                         Identify(doc, Method, RecordsUnsorted, NewScheduleData, ScheduleExist, RecordID, ProjectNum, ProjectName);
@@ -208,7 +216,7 @@ namespace Smart_Design_Plug_in_Updates
                     if (ChoosedProject != null || RecordID !="")
                     {
                         #region Intialize window
-                        MainWindow x = new MainWindow(ScheduleData, RecordID);
+                        MainWindow x = new MainWindow(ScheduleData, RecordID,ProjectNum);
                         double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                         double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                         double windowWidth = x.Width;
@@ -240,6 +248,26 @@ namespace Smart_Design_Plug_in_Updates
             IdentifyingChosenMethod Identifying = new IdentifyingChosenMethod();
             Identifying.IdnetifyMethod(doc, Method, RecordsUnsorted, NewScheduleData,Exist,RecordID,ProjectNum,ProjectName);
         }
+
+        private BitmapSource GetImageSource(Image img)
+        {
+            BitmapImage bmp = new BitmapImage();
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, ImageFormat.Png);
+                ms.Position = 0;
+                bmp.BeginInit();
+                bmp.CacheOption = BitmapCacheOption.OnLoad;
+                bmp.UriSource = null;
+                bmp.StreamSource = ms;
+                bmp.EndInit();
+            }
+            return bmp;
+        }
+
+
+
 
     }
 }

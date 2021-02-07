@@ -137,6 +137,8 @@ namespace Smart_Design_Plug_in_Updates
                     int stringLen = 0;
                     foreach (ClustersData Da in Data)
                     {
+
+
                         string ItemName = Da.Family__Type;
 
                         if (ItemName.Length > stringLen)

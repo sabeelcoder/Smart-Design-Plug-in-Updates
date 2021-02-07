@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Smart_Design_Plug_in_Updates</RootNamespace>
     <AssemblyName>Smart Design Plug-in Updates</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -55,8 +55,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Windows.Forms.DataVisualization.Design" />
     <Reference Include="System.Windows.Presentation" />
@@ -77,6 +79,7 @@
       <DependentUpon>Existing DataSchedule.xaml</DependentUpon>
     </Compile>
     <Compile Include="Creating smart schedule\ExistingData.cs" />
+    <Compile Include="ImageUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -98,6 +101,7 @@
     <EmbeddedResource Include="Resources\Add Table.png" />
     <EmbeddedResource Include="Resources\Database.png" />
     <EmbeddedResource Include="Resources\Smart Plugin.png" />
+    <None Include="Resources\EditImage.png" />
     <Content Include="Smart Design Plug-in Updates.addin" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +125,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SmartImageManager-main\SmartImageForm_v1.csproj">
+      <Project>{e1b62f5b-acbb-4aa1-ad46-8175c125d20b}</Project>
+      <Name>SmartImageForm_v1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\WpfApp1\WpfApp1.csproj">
       <Project>{48a522f0-f197-42ae-9045-149246743ab1}</Project>
       <Name>WpfApp1</Name>

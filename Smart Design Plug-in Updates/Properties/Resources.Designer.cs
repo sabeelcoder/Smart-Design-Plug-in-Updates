@@ -83,6 +83,16 @@ namespace Smart_Design_Plug_in_Updates.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap EditImage {
+            get {
+                object obj = ResourceManager.GetObject("EditImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Smart_Plugin {
             get {
                 object obj = ResourceManager.GetObject("Smart_Plugin", resourceCulture);

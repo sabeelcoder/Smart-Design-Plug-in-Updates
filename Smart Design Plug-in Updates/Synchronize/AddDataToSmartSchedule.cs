@@ -3,6 +3,9 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +53,15 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                 headerList.Add("Model");
                 headerList.Add("Description");
                 headerList.Add("Website");
+                headerList.Add("Image 1");
+                headerList.Add("Image 2");
+                headerList.Add("Image 3");
+                headerList.Add("Image 4");
+                headerList.Add("Image 5");
+                headerList.Add("Image 6");
+                headerList.Add("Image 7");
+                headerList.Add("Image 8");
+                headerList.Add("Image 9");
                 #endregion
 
                 #region Setting the table and location where the data will go
@@ -67,6 +79,21 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                 int stringLen = 0;
                 foreach (WpfApp1.Models.Item Da in Records)
                 {
+                    string pathAdd = Da.ItemName + "-" + Da.ItemNumber;
+                    string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+                    foreach (char c in invalid)
+                    {
+                        pathAdd = pathAdd.Replace(c.ToString(), "");
+                    }
+                    string path = @"%AppData%\Autodesk\Revit\Addins\2019\Smart App"+"\\"+pathAdd;
+                    path = Environment.ExpandEnvironmentVariables(path).TrimEnd();
+                    System.IO.DirectoryInfo di = new DirectoryInfo(path);
+                    if (!Directory.Exists(path))
+                    {
+                        System.IO.Directory.CreateDirectory(path);
+                    }
+
+
                     string ItemName = Da.ItemName;
                     stringLen = ItemName.Length;
 
@@ -82,6 +109,15 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                     tsd.SetColumnWidth(9, (stringLen / 25 + 1));
                     tsd.SetColumnWidth(10, (stringLen / 25 + 1));
                     tsd.SetColumnWidth(11, (stringLen / 25 + 1));
+                    tsd.SetColumnWidth(12, (stringLen / 25 + 1));
+                    tsd.SetColumnWidth(13, (stringLen / 25 + 1));
+                    tsd.SetColumnWidth(14, (stringLen / 25 + 1));
+                    tsd.SetColumnWidth(15, (stringLen / 25 + 1));
+                    tsd.SetColumnWidth(16, (stringLen / 25 + 1));
+                    tsd.SetColumnWidth(17, (stringLen / 25 + 1));
+                    tsd.SetColumnWidth(18, (stringLen / 25 + 1));
+                    tsd.SetColumnWidth(19, (stringLen / 25 + 1));
+                    tsd.SetColumnWidth(20, (stringLen / 25 + 1));
                     tsd.InsertRow(tsd.FirstRowNumber + 2 + x);
 
                     string RecordID = Da.FileMakerRecordId.ToString();
@@ -151,6 +187,33 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                         Website = " ";
                     }
                     tsd.SetCellText(tsd.FirstRowNumber + 2 + x, 11, Website);
+
+                    int count = 1;
+                    if (!(Da.Images == null))
+                    {
+                        foreach (var Im in Da.Images)
+                        {
+                            string PathIma = path + "\\" + count.ToString() + ".jpeg";
+                           /* using (var m = new MemoryStream())
+                            {
+                                Im.Save(m, ImageFormat.Jpeg);
+
+                                var img = Image.FromStream(m);
+
+                                //TEST
+                                img.Save(PathIma);
+                                //var bytes = PhotoEditor.ConvertImageToByteArray(img);
+
+
+                             }*/
+                            Im.Save(PathIma);
+                            var ImgEle = ImageType.Create(doc, PathIma);
+                            tsd.InsertImage(tsd.FirstRowNumber + 2 + x, 11 + count, ImgEle.Id);
+                            count++;
+                        }
+                    }
+
+
                     x = x + 1;
                 }
                 #endregion

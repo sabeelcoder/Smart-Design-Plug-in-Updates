@@ -33,9 +33,11 @@ namespace Smart_Design_Plug_in_Updates
             Image SmartPluginImg = Properties.Resources.Smart_Plugin;
             Image AddTableImg = Properties.Resources.Add_Table;
             Image DataBaseImg = Properties.Resources.Database;
+            Image EditImageImg = Properties.Resources.EditImage;
             ImageSource SmartPluginImgsc = GetImageSource(SmartPluginImg);
             ImageSource AddTableImgsc = GetImageSource(AddTableImg);
             ImageSource DataBaseImgsc = GetImageSource(DataBaseImg);
+            ImageSource EditImageImgsc = GetImageSource(EditImageImg);
             #endregion
 
             #region Pannel
@@ -62,10 +64,19 @@ namespace Smart_Design_Plug_in_Updates
                     assembly, "Smart_Design_Plug_in_Updates.SynchronizeFileMaker");
             FileMakerButton.Image = DataBaseImgsc;
             FileMakerButton.LargeImage = DataBaseImgsc;
-            AddTableButton.ToolTip = "Synchronize data with filemaker database";
-            AddTableButton.LongDescription = "This button enable either to extract the data from the file maker database from the specified project and add it to dummy schedule" +
+            FileMakerButton.ToolTip = "Synchronize data with filemaker database";
+            FileMakerButton.LongDescription = "This button enable either to extract the data from the file maker database from the specified project and add it to dummy schedule" +
                 " or create new items in the file maker project using the existing items in the smart schedule "+
                 "or update the project items using the existing items in the smart schedule";
+            #endregion
+
+            #region Add image update button
+            PushButtonData ImageButton = new PushButtonData("ImageButton", "Update Items Images",
+                    assembly, "Smart_Design_Plug_in_Updates.ImageUpdate");
+            ImageButton.Image = EditImageImgsc;
+            ImageButton.LargeImage = EditImageImgsc;
+            ImageButton.ToolTip = "Edit Items Images";
+            ImageButton.LongDescription = "This button enable to show images of each item and provide the capability of editing this images by clicking on the image and choose another image from your computer";
             #endregion
 
             PulldownButtonData sb1 = new PulldownButtonData("Smart Schedule", "Smart Schedule");
@@ -74,6 +85,7 @@ namespace Smart_Design_Plug_in_Updates
             sb.LargeImage = SmartPluginImgsc;
             sb.AddPushButton(AddTableButton);
             sb.AddPushButton(FileMakerButton);
+            sb.AddPushButton(ImageButton);
             #endregion
         }
 
