@@ -48,7 +48,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                     if (UserResp.ToString() == "Yes")
                     {
                         #region Intialize window
-                        CreateUpdate x = new CreateUpdate(NewScheduleData,RecordID);
+                        CreateUpdate x = new CreateUpdate(NewScheduleData,RecordID,ProjectNum);
                         double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                         double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                         double windowWidth = x.Width;
@@ -184,7 +184,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                 #region Send items to be created
 
                 #region Intialize window
-                CreateUpdate x = new CreateUpdate(NewRecords,RecordID);
+                CreateUpdate x = new CreateUpdate(NewRecords,RecordID,ProjectNum);
                 double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                 double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                 double windowWidth = x.Width;
@@ -249,7 +249,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                         #region Adding items to the schedule
                         NewRecordsTwo.Reverse();
                         AddDataToSmartSchedule Adding = new AddDataToSmartSchedule();
-                        Adding.AddData(NewRecordsTwo, doc, RecordID, ProjectNum, ProjectName);
+                        Adding.AddData(RecordsSortedTwo, doc, RecordID, ProjectNum, ProjectName);
                         #endregion
                         #endregion
                         MessageBoxButton buttons = MessageBoxButton.OK;

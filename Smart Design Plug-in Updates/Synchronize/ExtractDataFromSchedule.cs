@@ -115,7 +115,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
             return NewItems;
         }
 
-        public (List<WpfApp1.Models.Item>,string,string,string) ExData(Document doc)
+        public (List<WpfApp1.Models.Item>,string,string,string, List<WpfApp1.Models.Item>) ExData(Document doc)
         {
             List<WpfApp1.Models.Item> ExData = new List<WpfApp1.Models.Item>();
 
@@ -154,6 +154,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
             }
             int NumberOfRows = tsd.NumberOfRows - 3;
             List<WpfApp1.Models.Item> NewItems = new List<WpfApp1.Models.Item>();
+            List<WpfApp1.Models.Item> NewItemsToCreate = new List<WpfApp1.Models.Item>();
             for (int i = 0; i < NumberOfRows; i++)
             {
                 string ItemNum = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 3);
@@ -208,6 +209,58 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                     #endregion
                     NewItems.Add(NewItem);
                 }
+
+                else
+                {
+                    #region Add new item
+                    WpfApp1.Models.Item NewItem = new WpfApp1.Models.Item();
+
+                    if (tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 0) == " ")
+                    {
+                        NewItem.FileMakerRecordId = 0;
+                    }
+                    else
+                    {
+                        NewItem.FileMakerRecordId = Convert.ToInt32(tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 0));
+                    }
+
+
+
+
+                    NewItem.z1020_CRMRecordID = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 1);
+
+
+                    NewItem.ProjectNumber = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 2);
+
+
+                    NewItem.ItemNumber = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 3);
+
+
+                    NewItem.ItemName = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 4);
+
+
+                    NewItem.Area = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 5);
+
+
+                    NewItem.Quantity = Convert.ToInt32(tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 6));
+
+
+                    NewItem.SourceCompany = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 7);
+
+
+                    NewItem.Manufacturer = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 8);
+
+
+                    NewItem.ModelNumber = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 9);
+
+
+                    NewItem.Description = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 10);
+
+
+                    NewItem.Website = tsd.GetCellText(tsd.FirstRowNumber + 2 + i, 11);
+                    #endregion
+                    NewItemsToCreate.Add(NewItem);
+                }
                 
 
 
@@ -218,7 +271,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
 
 
-            return (NewItems, RecordID,ProjectNum,ProjectName);
+            return (NewItems, RecordID,ProjectNum,ProjectName,NewItemsToCreate);
         }
     }
 }

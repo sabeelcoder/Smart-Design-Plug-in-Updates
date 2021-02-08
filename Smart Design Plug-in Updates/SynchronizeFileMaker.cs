@@ -105,7 +105,7 @@ namespace Smart_Design_Plug_in_Updates
                         #endregion
 
                         #region Intialize window
-                        MainWindow x = new MainWindow(ScheduleData, RecordID,ProjectNum);
+                        MainWindow x = new MainWindow(ScheduleData, RecordID,ProjectNum,ScheduleExist,data.Item5);
                         double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                         double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                         double windowWidth = x.Width;
@@ -165,6 +165,7 @@ namespace Smart_Design_Plug_in_Updates
                     RecordID = data.Item2;
                     ProjectNum = data.Item3;
                     ProjectName = data.Item4;
+                    List<WpfApp1.Models.Item> ScheduleDataToCreate = data.Item5;
                     Project ChoosedProject=null;
                     #endregion
 
@@ -216,7 +217,7 @@ namespace Smart_Design_Plug_in_Updates
                     if (ChoosedProject != null || RecordID !="")
                     {
                         #region Intialize window
-                        MainWindow x = new MainWindow(ScheduleData, RecordID,ProjectNum);
+                        MainWindow x = new MainWindow(ScheduleData, RecordID,ProjectNum,ScheduleExist,ScheduleDataToCreate);
                         double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                         double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                         double windowWidth = x.Width;
