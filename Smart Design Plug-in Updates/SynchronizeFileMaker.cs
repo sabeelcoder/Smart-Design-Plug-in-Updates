@@ -22,6 +22,7 @@ namespace Smart_Design_Plug_in_Updates
     [Transaction(TransactionMode.Manual)]
     class SynchronizeFileMaker: IExternalCommand
     {
+        
         public Result Execute(
           ExternalCommandData commandData,
           ref string message,
@@ -32,6 +33,7 @@ namespace Smart_Design_Plug_in_Updates
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Autodesk.Revit.ApplicationServices.Application app = uiapp.Application;
             Document doc = uidoc.Document;
+            string Version = app.VersionNumber;
             List<ClustersData> ScheduleItems = new List<ClustersData>();
             #region Add schedule if it do not exist
             #region Check If Schedule Exist
@@ -126,7 +128,7 @@ namespace Smart_Design_Plug_in_Updates
 
                         #endregion
                         List<WpfApp1.Models.Item> NewScheduleData = ExData.NewRecords(RecordsSorted, doc);
-                        Identify(doc, Method, RecordsUnsorted, NewScheduleData, ScheduleExist, RecordID, ProjectNum, ProjectName);
+                        Identify(doc, Method, RecordsUnsorted, NewScheduleData, ScheduleExist, RecordID, ProjectNum, ProjectName,Version);
                         #endregion
 
                     }
@@ -217,6 +219,14 @@ namespace Smart_Design_Plug_in_Updates
                     if (ChoosedProject != null || RecordID !="")
                     {
                         #region Intialize window
+                        if (ScheduleData.Count == 0)
+                        {
+                            if (data.Item5.Count>0)
+                            {
+                                ScheduleExist = "";
+                            }
+                        }
+                        
                         MainWindow x = new MainWindow(ScheduleData, RecordID,ProjectNum,ScheduleExist,ScheduleDataToCreate);
                         double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                         double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
@@ -235,7 +245,7 @@ namespace Smart_Design_Plug_in_Updates
                         var RecordsSorted = Sorting.RecordsSort(RecordsUnsorted);
                         #endregion
                         List<WpfApp1.Models.Item> NewScheduleData = ExData.NewRecords(RecordsSorted, doc);
-                        Identify(doc, Method, RecordsUnsorted, NewScheduleData, ScheduleExist, RecordID, ProjectNum, ProjectName);
+                        Identify(doc, Method, RecordsUnsorted, NewScheduleData, ScheduleExist, RecordID, ProjectNum, ProjectName,Version);
                         #endregion
                     }
 
@@ -244,10 +254,10 @@ namespace Smart_Design_Plug_in_Updates
             return Result.Succeeded;
         }
 
-        public void Identify(Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist,string RecordID,string ProjectNum,string ProjectName)
+        public void Identify(Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist,string RecordID,string ProjectNum,string ProjectName,string Version)
         {
             IdentifyingChosenMethod Identifying = new IdentifyingChosenMethod();
-            Identifying.IdnetifyMethod(doc, Method, RecordsUnsorted, NewScheduleData,Exist,RecordID,ProjectNum,ProjectName);
+            Identifying.IdnetifyMethod(doc, Method, RecordsUnsorted, NewScheduleData,Exist,RecordID,ProjectNum,ProjectName,Version);
         }
 
         private BitmapSource GetImageSource(Image img)

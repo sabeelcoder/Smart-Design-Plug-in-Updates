@@ -23,6 +23,7 @@ namespace Smart_Design_Plug_in_Updates
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Autodesk.Revit.ApplicationServices.Application app = uiapp.Application;
             Document doc = uidoc.Document;
+            string Version = app.VersionNumber;
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
             #region LoadingProjects
@@ -90,16 +91,16 @@ namespace Smart_Design_Plug_in_Updates
                 #endregion
                 string ScheduleExist = "Exist";
                 List<WpfApp1.Models.Item> NewScheduleData = new List<Item>();
-                Identify(doc, Method, RecordsUnsorted, NewScheduleData, ScheduleExist, RecordID, ProjectNum, ProjectName);
+                Identify(doc, Method, RecordsUnsorted, NewScheduleData, ScheduleExist, RecordID, ProjectNum, ProjectName,Version);
                 #endregion
 
             }
             return Result.Succeeded;
         }
-        public void Identify(Document doc, string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData, string Exist, string RecordID, string ProjectNum, string ProjectName)
+        public void Identify(Document doc, string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData, string Exist, string RecordID, string ProjectNum, string ProjectName,string Version)
         {
             IdentifyingChosenMethod Identifying = new IdentifyingChosenMethod();
-            Identifying.IdnetifyMethod(doc, Method, RecordsUnsorted, NewScheduleData, Exist, RecordID, ProjectNum, ProjectName);
+            Identifying.IdnetifyMethod(doc, Method, RecordsUnsorted, NewScheduleData, Exist, RecordID, ProjectNum, ProjectName,Version);
         }
     }
 }

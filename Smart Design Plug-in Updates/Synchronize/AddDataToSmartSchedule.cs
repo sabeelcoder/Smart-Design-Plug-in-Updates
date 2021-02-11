@@ -17,7 +17,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
     class AddDataToSmartSchedule
     {
-        public void AddData(List<WpfApp1.Models.Item> Records, Document doc,string RecordIDD,string ProjectNumber,string ProjectNamee)
+        public void AddData(List<WpfApp1.Models.Item> Records, Document doc,string RecordIDD,string ProjectNumber,string ProjectNamee,string Version)
         {
 
             ViewSchedule smartSchedule;
@@ -85,7 +85,19 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                     {
                         pathAdd = pathAdd.Replace(c.ToString(), "");
                     }
-                    string path = @"%AppData%\Autodesk\Revit\Addins\2019\Smart App"+"\\"+pathAdd;
+                    string path = @"%AppData%\Autodesk\REVIT\Addins";
+                    path = Environment.ExpandEnvironmentVariables(path);
+                    if (!Directory.Exists(path))
+                    {
+                        path = @"%AppData%\Autodesk\Revit\Addins";
+                        path = Environment.ExpandEnvironmentVariables(path);
+                        if (!Directory.Exists(path))
+                        {
+                            path = @"%AppData%\Autodesk\REVIT\Addins";
+                            path = Environment.ExpandEnvironmentVariables(path);
+                        }
+                    }
+                    path = path+"\\" + Version + "\\Smart App\\" + pathAdd;
                     path = Environment.ExpandEnvironmentVariables(path).TrimEnd();
                     System.IO.DirectoryInfo di = new DirectoryInfo(path);
                     if (!Directory.Exists(path))
@@ -194,22 +206,30 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                         foreach (var Im in Da.Images)
                         {
                             string PathIma = path + "\\" + count.ToString() + ".jpeg";
-                           /* using (var m = new MemoryStream())
+                            /* using (var m = new MemoryStream())
+                             {
+                                 Im.Save(m, ImageFormat.Jpeg);
+
+                                 var img = Image.FromStream(m);
+
+                                 //TEST
+                                 img.Save(PathIma);
+                                 //var bytes = PhotoEditor.ConvertImageToByteArray(img);
+
+
+                              }*/
+                            try
                             {
-                                Im.Save(m, ImageFormat.Jpeg);
+                                Im.Save(PathIma);
+                                var ImgEle = ImageType.Create(doc, PathIma);
+                                tsd.InsertImage(tsd.FirstRowNumber + 2 + x, 11 + count, ImgEle.Id);
+                                count++;
+                            }
+                            catch
+                            {
 
-                                var img = Image.FromStream(m);
+                            }
 
-                                //TEST
-                                img.Save(PathIma);
-                                //var bytes = PhotoEditor.ConvertImageToByteArray(img);
-
-
-                             }*/
-                            Im.Save(PathIma);
-                            var ImgEle = ImageType.Create(doc, PathIma);
-                            tsd.InsertImage(tsd.FirstRowNumber + 2 + x, 11 + count, ImgEle.Id);
-                            count++;
                         }
                     }
 

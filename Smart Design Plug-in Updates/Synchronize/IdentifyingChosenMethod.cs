@@ -17,10 +17,23 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 {
     class IdentifyingChosenMethod
     {
-        public void IdnetifyMethod(Autodesk.Revit.DB.Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist, string RecordID, string ProjectNum, string ProjectName)
+        public void IdnetifyMethod(Autodesk.Revit.DB.Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist, string RecordID, string ProjectNum, string ProjectName,
+            string Version)
         {
             List<ClustersData> ScheduleItems = new List<ClustersData>();
-            string path = @"%AppData%\Autodesk\REVIT\Addins\2019\Smart App";
+            string path = @"%AppData%\Autodesk\REVIT\Addins";
+            path = Environment.ExpandEnvironmentVariables(path);
+            if (!Directory.Exists(path))
+            {
+                path = @"%AppData%\Autodesk\Revit\Addins";
+                path = Environment.ExpandEnvironmentVariables(path);
+                if (!Directory.Exists(path))
+                {
+                    path = @"%AppData%\Autodesk\REVIT\Addins";
+                    path = Environment.ExpandEnvironmentVariables(path);
+                }
+            }
+            path = path+"\\" + Version + "\\Smart App";
             path = Environment.ExpandEnvironmentVariables(path);
             System.IO.DirectoryInfo di = new DirectoryInfo(path);
              if (!Directory.Exists(path))
@@ -93,7 +106,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
                         #region Adding items to the schedule
                         AddDataToSmartSchedule Adding1 = new AddDataToSmartSchedule();
-                        Adding1.AddData(RecordsSortedTwo, doc,RecordID,ProjectNum,ProjectName);
+                        Adding1.AddData(RecordsSortedTwo, doc,RecordID,ProjectNum,ProjectName,Version);
                         #endregion
 
 
@@ -109,7 +122,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
                         #region Adding items to the schedule
                         AddDataToSmartSchedule Adding = new AddDataToSmartSchedule();
-                        Adding.AddData(RecordsSorted, doc, RecordID, ProjectNum, ProjectName);
+                        Adding.AddData(RecordsSorted, doc, RecordID, ProjectNum, ProjectName,Version);
                         #endregion
 
 
@@ -152,7 +165,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
 
                     #region Adding items to the schedule
                     AddDataToSmartSchedule Adding = new AddDataToSmartSchedule();
-                    Adding.AddData(RecordsSorted, doc, RecordID, ProjectNum, ProjectName);
+                    Adding.AddData(RecordsSorted, doc, RecordID, ProjectNum, ProjectName,Version);
                     #endregion
 
 
@@ -249,7 +262,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                         #region Adding items to the schedule
                         NewRecordsTwo.Reverse();
                         AddDataToSmartSchedule Adding = new AddDataToSmartSchedule();
-                        Adding.AddData(RecordsSortedTwo, doc, RecordID, ProjectNum, ProjectName);
+                        Adding.AddData(RecordsSortedTwo, doc, RecordID, ProjectNum, ProjectName,Version);
                         #endregion
                         #endregion
                         MessageBoxButton buttons = MessageBoxButton.OK;
