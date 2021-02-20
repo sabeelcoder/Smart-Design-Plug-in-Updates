@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "..\WpfApp1\WpfAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartImageForm_v1", "..\SmartImageManager-main\SmartImageForm_v1.csproj", "{E1B62F5B-ACBB-4AA1-AD46-8175C125D20B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginWindow", "..\Login-Window-master\Login-Window-master\LoginWindow\LoginWindow\LoginWindow.csproj", "{D671E8D0-A33B-48E2-9E61-33A875AC7AB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E1B62F5B-ACBB-4AA1-AD46-8175C125D20B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1B62F5B-ACBB-4AA1-AD46-8175C125D20B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1B62F5B-ACBB-4AA1-AD46-8175C125D20B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D671E8D0-A33B-48E2-9E61-33A875AC7AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D671E8D0-A33B-48E2-9E61-33A875AC7AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D671E8D0-A33B-48E2-9E61-33A875AC7AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D671E8D0-A33B-48E2-9E61-33A875AC7AB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

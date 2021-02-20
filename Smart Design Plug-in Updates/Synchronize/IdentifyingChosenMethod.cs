@@ -18,7 +18,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
     class IdentifyingChosenMethod
     {
         public void IdnetifyMethod(Autodesk.Revit.DB.Document doc,string Method, List<WpfApp1.Models.Item> RecordsUnsorted, List<WpfApp1.Models.Item> NewScheduleData,string Exist, string RecordID, string ProjectNum, string ProjectName,
-            string Version)
+            string Version,string username,string password)
         {
             List<ClustersData> ScheduleItems = new List<ClustersData>();
             string path = @"%AppData%\Autodesk\REVIT\Addins";
@@ -61,7 +61,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                     if (UserResp.ToString() == "Yes")
                     {
                         #region Intialize window
-                        CreateUpdate x = new CreateUpdate(NewScheduleData,RecordID,ProjectNum);
+                        CreateUpdate x = new CreateUpdate(NewScheduleData,RecordID,ProjectNum,username,password);
                         double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                         double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                         double windowWidth = x.Width;
@@ -197,7 +197,7 @@ namespace Smart_Design_Plug_in_Updates.Synchronize
                 #region Send items to be created
 
                 #region Intialize window
-                CreateUpdate x = new CreateUpdate(NewRecords,RecordID,ProjectNum);
+                CreateUpdate x = new CreateUpdate(NewRecords,RecordID,ProjectNum,username,password);
                 double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
                 double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
                 double windowWidth = x.Width;
